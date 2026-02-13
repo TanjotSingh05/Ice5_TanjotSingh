@@ -1,0 +1,60 @@
+name: Workflow 2 - Multi-Platform Testing
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  ubuntu-job:
+    name: Ubuntu Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show OS info
+        run: |
+          echo "Runner OS: $RUNNER_OS"
+          uname -a
+
+      - name: Create and display file
+        run: |
+          echo "Hello from Ubuntu!" > os-output.txt
+          cat os-output.txt
+
+  macos-job:
+    name: macOS Job
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show OS info
+        run: |
+          echo "Runner OS: $RUNNER_OS"
+          uname -a
+
+      - name: Create and display file
+        run: |
+          echo "Hello from macOS!" > os-output.txt
+          cat os-output.txt
+
+  windows-job:
+    name: Windows Job
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show OS info
+        shell: pwsh
+        run: |
+          Write-Host "Runner OS: $env:RUNNER_OS"
+          systeminfo | Select-Object -First 15
+
+      - name: Create and display file
+        shell: pwsh
+        run: |
+          "Hello from Windows!" | Out-File -FilePath os-output.txt -Encoding utf8
+          Get-Content os-output.txt
